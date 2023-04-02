@@ -2,13 +2,18 @@ const QuizSchema = require("../model/quizModel");
 const QuestionSchema = require("../model/questions");
 
 exports.createQuiz = async (req, res) => {
-  const { quizname, description, points, timeLimit } = req.body;
+  const { quizname, description, points, timeLimit, question, answers } =
+    req.body;
   try {
     const quiz = await QuizSchema.create({
       quizname,
       description,
       points,
       timeLimit,
+      questAns: {
+        question,
+        answers,
+      },
     });
     res.status(201).json({
       quiz,
