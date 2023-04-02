@@ -1,22 +1,22 @@
-const QuizSchema = require("../model/quizModel");
-const QuestionSchema = require("../model/questions");
+const QuizSchema = require("../model/Quiz.model");
+const QuestionSchema = require("../model/Questions.model");
 
 exports.createQuiz = async (req, res) => {
-  const { quizname, description, points, timeLimit, question, answers } =
-    req.body;
+  const { quizname, description, points, timeLimit } = req.body;
   try {
     const quiz = await QuizSchema.create({
       quizname,
       description,
       points,
       timeLimit,
-      questAns: {
-        question,
-        answers,
-      },
+    });
+    const questions = await QuestionSchema.create({
+      quizID: quiz._id,
+      questions: [],
     });
     res.status(201).json({
       quiz,
+      questions,
     });
   } catch (error) {
     res.status(401).json({
@@ -26,10 +26,10 @@ exports.createQuiz = async (req, res) => {
 };
 
 exports.createQuestions = async (req, res) => {
-  const { questions, answers } = req.body;
+  const { prompt, answers } = req.body;
   try {
     const question = await QuestionSchema.create({
-      questions,
+      quizID: prompt,
       answers,
     });
     res.status(201).json({
