@@ -26,12 +26,18 @@ exports.createQuiz = async (req, res) => {
 };
 
 exports.createQuestions = async (req, res) => {
+  //Find the Quiz the user would want to create questions on
+  const id = req.params.id;
+  const quizID = await QuizSchema.findOne({ _id: id });
+  console.log(quizID);
   const { prompt, answers } = req.body;
   try {
-    const question = await QuestionSchema.create({
-      quizID: prompt,
-      answers,
-    });
+    const question = await QuestionSchema.findOneAndUpdate(
+      { quizID },
+      {
+        questions: { prompt, answers },
+      }
+    );
     res.status(201).json({
       question,
     });

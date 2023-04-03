@@ -6,5 +6,5 @@ const {
 const router = express.Router();
 
 router.post("/", createQuiz);
-router.post("/createQuestions", createQuestions);
+router.post("/createQuestions/:id", createQuestions);
 module.exports = router;
