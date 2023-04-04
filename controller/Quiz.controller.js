@@ -47,3 +47,29 @@ exports.createQuestions = async (req, res) => {
     });
   }
 };
+
+exports.deleteQuestions = async (req, res) => {
+  const { id, questionID } = req.params;
+  const quizID = await QuizSchema.findOne({ _id: id });
+  try {
+    const deleteQuestion = await QuestionSchema.findOneAndUpdate(
+      { quizID },
+      { $pull: { questions: { _id: questionID } } },
+      { new: true }
+    );
+    if (!deleteQuestion) {
+      res.status(404).json({
+        message: "Question to delete was not found",
+      });
+    } else {
+      res.status(201).json({
+        message: "Question has been deleted successfully",
+        deleteQuestion,
+      });
+    }
+  } catch (error) {
+    res.status(401).json({
+      error: error.message,
+    });
+  }
+};
