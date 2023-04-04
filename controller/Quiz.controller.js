@@ -19,57 +19,8 @@ exports.createQuiz = async (req, res) => {
       questions,
     });
   } catch (error) {
-    res.status(401).json({
+    res.status(500).json({
       error,
-    });
-  }
-};
-
-exports.createQuestions = async (req, res) => {
-  //Find the Quiz the user would want to create questions on
-  const id = req.params.id;
-  const quizID = await QuizSchema.findOne({ _id: id });
-  console.log(quizID);
-  const { prompt, answers } = req.body;
-  try {
-    const question = await QuestionSchema.findOneAndUpdate(
-      { quizID },
-      {
-        questions: { prompt, answers },
-      }
-    );
-    res.status(201).json({
-      question,
-    });
-  } catch (error) {
-    res.status(401).json({
-      error: error.message,
-    });
-  }
-};
-
-exports.deleteQuestions = async (req, res) => {
-  const { id, questionID } = req.params;
-  const quizID = await QuizSchema.findOne({ _id: id });
-  try {
-    const deleteQuestion = await QuestionSchema.findOneAndUpdate(
-      { quizID },
-      { $pull: { questions: { _id: questionID } } },
-      { new: true }
-    );
-    if (!deleteQuestion) {
-      res.status(404).json({
-        message: "Question to delete was not found",
-      });
-    } else {
-      res.status(201).json({
-        message: "Question has been deleted successfully",
-        deleteQuestion,
-      });
-    }
-  } catch (error) {
-    res.status(401).json({
-      error: error.message,
     });
   }
 };
