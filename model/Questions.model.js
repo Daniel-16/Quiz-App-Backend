@@ -8,7 +8,8 @@ const QuestionSchema = new mongoose.Schema({
   questions: [
     {
       prompt: String,
-      answers: Array,
+      options: Array,
+      answers: String,
     },
   ],
 });

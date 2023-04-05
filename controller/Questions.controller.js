@@ -6,13 +6,13 @@ exports.createQuestions = async (req, res) => {
   const id = req.params.id;
   const quizID = await QuizSchema.findOne({ _id: id });
   console.log(quizID);
-  const { prompt, answers } = req.body;
+  const { prompt, options, answers } = req.body;
   try {
     const question = await QuestionSchema.findOneAndUpdate(
       { quizID },
       {
         $push: {
-          questions: { prompt, answers },
+          questions: { prompt, options, answers },
         },
       }
     );
@@ -54,13 +54,17 @@ exports.deleteQuestions = async (req, res) => {
 
 exports.editQuestions = async (req, res) => {
   const { id, questionID } = req.params;
-  const { prompt, answers } = req.body;
+  const { prompt, options, answers } = req.body;
   const quizID = await QuizSchema.findOne({ _id: id });
   try {
     const question = await QuestionSchema.findOneAndUpdate(
       { quizID, "questions._id": questionID },
       {
-        $set: { "questions.$.prompt": prompt, "questions.$.answers": answers },
+        $set: {
+          "questions.$.prompt": prompt,
+          "questions.$.options": options,
+          "questions.$.answers": answers,
+        },
       },
       { new: true }
     );
