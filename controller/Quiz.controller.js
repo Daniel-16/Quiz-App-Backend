@@ -24,3 +24,20 @@ exports.createQuiz = async (req, res) => {
     });
   }
 };
+
+exports.deleteQuiz = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const quiz = await QuizSchema.findOneAndDelete({ _id: id });
+    const questions = await QuestionSchema.findOneAndDelete({ quizID: id });
+    res.status(201).json({
+      success: true,
+      message: "Quiz deleted successfully",
+    });
+  } catch (error) {
+    res.status(501).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};

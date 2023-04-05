@@ -1,5 +1,5 @@
 const express = require("express");
-const { createQuiz } = require("../controller/Quiz.controller");
+const { createQuiz, deleteQuiz } = require("../controller/Quiz.controller");
 const {
   createQuestions,
   deleteQuestions,
@@ -13,4 +13,5 @@ router.post("/createQuestions/:id", createQuestions);
 router.delete("/deleteQuestion/:id/:questionID", deleteQuestions);
 router.put("/editQuestion/:id/:questionID", editQuestions);
 router.get("/getQuestions/:id", getAllQuestions);
+router.delete("/deleteQuiz/:id", deleteQuiz);
 module.exports = router;
