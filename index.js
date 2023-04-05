@@ -3,6 +3,7 @@ const cors = require("cors");
 const app = express();
 const mongoose = require("mongoose");
 const router = require("./routes/Quiz.routes");
+require("dotenv").config();
 
 app.use(cors());
 app.use(express.json());
@@ -11,7 +12,7 @@ app.use(express.json());
 app.use("/api", router);
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/quiz-app")
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     app.listen(process.env.PORT || 6000, () => {
       console.log(`Server started at PORT ${process.env.PORT || 6000}`);
