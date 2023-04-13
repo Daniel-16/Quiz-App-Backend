@@ -41,3 +41,45 @@ exports.deleteQuiz = async (req, res) => {
     });
   }
 };
+
+exports.getAllQuizzes = async (req, res) => {
+  try {
+    const quiz = await QuizSchema.find({});
+    res.status(201).json({
+      success: true,
+      quiz,
+    });
+  } catch (err) {
+    res.status(501).json({
+      success: false,
+      error: err.message,
+    });
+  }
+};
+
+exports.editQuiz = async (req, res) => {
+  const { id } = req.params;
+  const { quizname, description, points, timeLimit } = req.body;
+  try {
+    const editQuiz = await QuizSchema.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          quizname,
+          description,
+          points,
+          timeLimit,
+        },
+      }
+    );
+    res.status(201).json({
+      success: true,
+      editQuiz,
+    });
+  } catch (error) {
+    res.status(501).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
