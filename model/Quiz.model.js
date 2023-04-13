@@ -9,11 +9,11 @@ const QuizSchema = new mongoose.Schema({
     required: true,
   },
   points: {
-    type: Number,
+    type: String,
     required: true,
   },
   timeLimit: {
-    type: Number,
+    type: String,
     required: true,
   },
 });
