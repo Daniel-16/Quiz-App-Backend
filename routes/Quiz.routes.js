@@ -17,7 +17,7 @@ router.post("/", createQuiz);
 router.post("/createQuestions/:id", createQuestions);
 router.delete("/deleteQuestion/:id/:questionID", deleteQuestions);
 router.put("/editQuestion/:id/:questionID", editQuestions);
-router.get("/getQuestions", getAllQuestions);
+router.get("/getQuestions/:id", getAllQuestions);
 router.delete("/deleteQuiz/:id", deleteQuiz);
 router.get("/getQuizzes", getAllQuizzes);
 router.put("/editQuiz/:id", editQuiz);
