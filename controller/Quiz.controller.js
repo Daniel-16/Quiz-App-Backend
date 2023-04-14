@@ -83,3 +83,19 @@ exports.editQuiz = async (req, res) => {
     });
   }
 };
+
+exports.getSingleQuiz = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const quiz = await QuizSchema.findOne({ _id: id });
+    res.status(201).json({
+      success: true,
+      quiz,
+    });
+  } catch (error) {
+    res.status(501).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};

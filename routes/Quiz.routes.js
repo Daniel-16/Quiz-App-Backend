@@ -4,6 +4,7 @@ const {
   deleteQuiz,
   getAllQuizzes,
   editQuiz,
+  getSingleQuiz,
 } = require("../controller/Quiz.controller");
 const {
   createQuestions,
@@ -21,4 +22,5 @@ router.get("/getQuestions/:id", getAllQuestions);
 router.delete("/deleteQuiz/:id", deleteQuiz);
 router.get("/getQuizzes", getAllQuizzes);
 router.put("/editQuiz/:id", editQuiz);
+router.get("/getSingleQuiz/:id", getSingleQuiz);
 module.exports = router;
