@@ -84,10 +84,10 @@ exports.editQuestions = async (req, res) => {
 };
 
 exports.getAllQuestions = async (req, res) => {
-  // const { id } = req.params;
+  const { id } = req.params;
   // const quizID = await QuizSchema.findOne({ _id: id });
   try {
-    const questions = await QuestionSchema.find({});
+    const questions = await QuestionSchema.findOne({ quizID: id });
     // if (questions.length >= 1) {
     //   res.status(201).json({
     //     success: true,
